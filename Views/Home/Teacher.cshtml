@@ -1,0 +1,75 @@
+﻿@model List<TeacherWorkload>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Викладач</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" style="color:darkblue; font-size:20px;" asp-area="" asp-controller="Home" asp-action="TeacherUpdate">
+                    @Html.DisplayFor(surname => surname.First().Teacher.Surname) @Html.DisplayFor(name => name.First().Teacher.Name)
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;" asp-controller="Home" asp-action="TeacherTimetable">Розклад</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;" asp-controller="Home" asp-action="TeacherUpdate">Навантаження</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h5 style="color:darkblue;">Моє навантаження</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="color:darkblue;">Предмет</th>
+                        <th style="color:darkblue;">Група</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (TeacherWorkload tw in Model)
+                    {
+                        <tr>
+                            <td style="color:darkblue;">
+                                <a href="@Url.Action("Group","Home", new { GroupID = tw.GroupID, SubjectID = tw.SubjectID})">@tw.Subject.SubjectName</a>
+                            </td>
+                            <td style="color:darkblue;">
+                                <a>@tw.Group.GroupName</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer class="border-top footer text-muted" style="background-color:darkblue">
+        <div class="container" style="color:white">
+            &copy; 2021 - Електронний журнал школяра    -   Розробник Дзюрах Іван
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

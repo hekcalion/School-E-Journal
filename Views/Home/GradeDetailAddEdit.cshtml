@@ -1,0 +1,37 @@
+﻿@model GradeDetail
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GradeDetailAddEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GradeDetailID" />
+            <input type="hidden" asp-for="GradeID" />         
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Опис</label>
+                <input asp-for="Description" class="form-control"  style="width:150%"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark" class="control-label">Оцінка</label>
+                <input asp-for="Mark" class="form-control" data-val-required="Поле потрібно заповнити" style="width:150%"/>
+                <span asp-validation-for="Mark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label">Дата</label>
+                <input asp-for="Date" type="date"  class="form-control" style="width:150%"/>
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" style="width:150%" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

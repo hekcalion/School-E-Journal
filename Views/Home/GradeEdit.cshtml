@@ -1,0 +1,34 @@
+﻿@model Grade
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GradeEdit" asp-route-id="@Model.GradeID">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GradeID" />
+            <div class="form-group">
+                <label asp-for="FirstTermGrade" class="control-label">Семест І</label>
+                <input asp-for="FirstTermGrade" class="form-control" />
+                <span asp-validation-for="FirstTermGrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondTermGrade" class="control-label">Семест ІІ</label>
+                <input asp-for="SecondTermGrade" class="form-control" />
+                <span asp-validation-for="SecondTermGrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalGrade" class="control-label">Річна</label>
+                <input asp-for="FinalGrade" class="form-control" />
+                <span asp-validation-for="FinalGrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Редагувати" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

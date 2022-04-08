@@ -1,0 +1,75 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Авторизація</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <center>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" style="font-size:30px; color:blue">Електронний журнал</a>
+        </center>
+    </header>
+    <style>
+        input[type=text] {
+            width: 20%;
+            color: darkblue;
+            border-color: darkblue;
+            outline: none;
+            color: darkblue;
+            font-size: 20px;
+        }
+
+        input[type=password] {
+            width: 20%;
+            color: darkblue;
+            border-color: darkblue;
+            outline: none;
+            color: darkblue;
+            font-size: 20px;
+        }
+
+        button[type=submit] {
+            width: 20%;
+            background-color: darkblue;
+            font-size: 20px;
+        }
+        p {
+            margin-top: 5%;
+            color: red;
+            font-size: 20px;
+        }
+    </style>
+    <div class="text-center">
+        <p>@Html.DisplayFor(modelItem => modelItem.ErrorMassage)</p>
+        <div>
+            <form class="d-flex flex-column align-self-center" asp-controller="Home" asp-action="Login" method="post">               
+                <div class="p-2">
+                    <input type="text" asp-for="Login" placeholder="Логін" />
+                </div>
+                <div class="p-2">
+                    <input type="password" asp-for="Password" placeholder="Пароль" />
+                </div>
+                <div class="p-2">
+                    <button class="btn btn-primary" type="submit">Вхід</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="border-top footer text-muted" style="background-color:darkblue">
+        <div class="container" style="color:white">
+            &copy; 2021 - Електронний журнал школяра    -   Розробник Дзюрах Іван
+        </div>
+    </footer>
+</body>
+</html>

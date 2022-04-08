@@ -1,0 +1,89 @@
+﻿@model GradeViewModel
+@using static System.DateTime
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Студент</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" style="color:darkblue; font-size:20px;" asp-area="" asp-controller="Home" asp-action="Student">@Html.DisplayFor(sub => sub.SubjectName)</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;"  asp-controller="Home" asp-action="Timetable" asp-route-id="@Model.Student.Group.GroupID">Розклад</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;"  asp-controller="Home" asp-action="Student">Предмети</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <table class="table" style="width:50%">
+                <thead>
+                    <tr>
+                        <th style="color:darkblue;">Семест І</th>
+                        <th style="color:darkblue;">Семест ІІ</th>
+                        <th style="color:darkblue;">Річна</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:darkblue;">@Model.Student.Grades.Where(gr => gr.Subject.SubjectName == Model.SubjectName).First().FirstTermGrade</td>
+                        <td style="color:darkblue;">@Model.Student.Grades.Where(gr => gr.Subject.SubjectName == Model.SubjectName).First().SecondTermGrade</td>
+                        <td style="color:darkblue;">@Model.Student.Grades.Where(gr => gr.Subject.SubjectName == Model.SubjectName).First().FinalGrade</td>
+                    </tr>
+                </tbody>
+            </table>           
+        </div>
+        <div class="container">
+            <h5 style="color:darkblue;">Список всіх оцінок</h5>
+            <table class="table" style="width:50%">
+                <thead>
+                    <tr>
+                        <th style="color:darkblue;">Опис</th>
+                        <th style="color:darkblue;">Оцінка</th>
+                        <th style="color:darkblue;">Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GradeDetail gd in Model.Student.Grades.Where(gr => gr.Subject.SubjectName == Model.SubjectName).First().GradeDetails)
+                    {
+                        <tr>
+                            <td style="color:darkblue;">@gd.Description</td>
+                            <td style="color:darkblue;">@gd.Mark</td>
+                            <td style="color:darkblue;">@gd.Date.ToShortDateString()</td>
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer class="border-top footer text-muted" style="background-color:darkblue">
+        <div class="container" style="color:white">
+            &copy; 2021 - Електронний журнал школяра    -   Розробник Дзюрах Іван
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

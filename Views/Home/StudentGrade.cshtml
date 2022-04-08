@@ -1,0 +1,152 @@
+﻿@model StudentGradeViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Викладач</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" style="color:darkblue; font-size:20px;" asp-area="" asp-controller="Home" asp-action="Teacher">
+                    @Html.DisplayFor(sub => sub.Grade.Subject.SubjectName) (@Html.DisplayFor(surname => surname.Student.Surname)  @Html.DisplayFor(name => name.Student.Name))
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;" asp-controller="Home" asp-action="TeacherTimetable">Розклад</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;" asp-controller="Home" asp-action="Teacher">Навантаження</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:darkblue; font-size:15px;" asp-controller="Home" asp-action="GroupUpdate">Група</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="color:darkblue;">
+                            Семестр І
+                        </th>
+                        <th style="color:darkblue;">
+                            Семестр ІІ
+                        </th>
+                        <th style="color:darkblue;">
+                            Річна
+                        </th>
+                        <th></th>                   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:darkblue;">
+                            @Html.DisplayFor( g => g.Grade.FirstTermGrade)
+                        </td>
+                        <td style="color:darkblue;">
+                            @Html.DisplayFor( g => g.Grade.SecondTermGrade)
+                        </td>
+                        <td style="color:darkblue;">
+                            @Html.DisplayFor(g => g.Grade.FinalGrade)
+                        </td>
+                        <td style="color:white">
+                            <a onclick="showGradeEdit('@Url.Action("GradeEdit","Home", new {GradeID = Model.Grade.GradeID} ,Context.Request.Scheme)','Редагування')" 
+                               class="btn btn-primary">Редагувати</a>
+                        </td>
+                        <td></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h5 style="color:darkblue;">Список всіх оцінок</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="color:darkblue;">
+                            Опис
+                        </th>
+                        <th style="color:darkblue;">
+                            Оцінка
+                        </th>
+                        <th style="color:darkblue;">
+                            Дата
+                        </th>
+                        <th style="color:white">
+                            <a onclick="showGradeEdit('@Url.Action("GradeDetailAddEdit","Home", new { GradeDetailID = -200 } ,Context.Request.Scheme)','Нова оцінка')" class="btn btn-primary" style="width:47%">Добавити</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GradeDetail item in Model.Grade.GradeDetails)
+                    {
+                        <tr>
+                            <td style="color:darkblue;">
+                                @item.Description
+                            </td>
+                            <td style="color:darkblue;">
+                                @item.Mark
+                            </td>
+                            <td style="color:darkblue;">
+                                @item.Date.ToShortDateString()
+                            </td>
+                            <td style="color:white">
+                                <a onclick="showGradeEdit('@Url.Action("GradeDetailAddEdit","Home", new { GradeDetailID = item.GradeDetailID } ,Context.Request.Scheme)','Редагування')" class="btn btn-primary">Редагувати</a> |
+                                <a onclick="showGradeEdit('@Url.Action("GradeDetailDelete","Home", new { id = item.GradeDetailID } ,Context.Request.Scheme)','Видалення')" class="btn btn-danger">Видалити</a> |
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="modal" tabindex="-1" role="dialog" id="Form-GradeEdit">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="border-top footer text-muted" style="background-color:darkblue">
+        <div class="container" style="color:white">
+            &copy; 2021 - Електронний журнал школяра    -   Розробник Дзюрах Іван
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
